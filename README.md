@@ -16,3 +16,4 @@ React + Vite + Tailwind + Supabase (Postgres, Auth, RLS).
 - Staff: view/add/edit donors. Admin: also delete donors + manage users.
 - Inputs validated in the UI and by DB CHECK constraints.
 "# Midawga-dhalinyarada-Calas-app" 
+"# Midawga-dhalinyarada-Calas-app" 
