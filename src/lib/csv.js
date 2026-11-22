@@ -4,7 +4,7 @@ const esc = v => {
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s
 }
 export function exportDonorsCsv(donors) {
-  const head = ['Donor ID / Aqoonsiga','Full Name / Magaca buuxa','Gender / Jinsi','Age / Da`da','Phone / Telefoon','Blood Group / Kooxda dhiiga','City / Magaalo','Address / Cinwaan','Available / La heli karo','Registered / Diiwaangashan']
+  const head = ['Donor ID','Full Name','Gender','Age','Phone','Blood Group','City','Address','Available','Registered']
   const rows = donors.map(d => [d.donor_code,d.full_name,d.gender,d.age,d.phone,d.blood_group,d.city,d.address,
     d.availability_status ? 'Yes' : 'No', new Date(d.created_at).toISOString()])
   const csv = [head, ...rows].map(r => r.map(esc).join(',')).join('\n')
