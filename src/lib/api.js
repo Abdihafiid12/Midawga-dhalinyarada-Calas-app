@@ -1,6 +1,7 @@
 export async function api(path, options = {}) {
   const response = await fetch(path, {
     ...options,
+    credentials: 'same-origin',
     headers: { 'Content-Type': 'application/json', ...options.headers },
   })
   const data = await response.json().catch(() => ({}))
