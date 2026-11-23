@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Loader2 } from 'lucide-react'
 import { BLOOD_GROUPS, GENDERS } from '../lib/constants'
 import { validateDonor } from '../lib/validation'
@@ -7,12 +7,19 @@ const empty = { full_name:'', gender:'', age:'', phone:'', blood_group:'', city:
 export default function DonorForm({ donor, onSubmit, onCancel }) {
   const [f, setF] = useState(donor ? { ...empty, ...donor, age: String(donor.age) } : empty)
   const [errors, setErrors] = useState({}); const [saving, setSaving] = useState(false); const [serverErr, setServerErr] = useState('')
+  const submitting = useRef(false)
   const set = (k, v) => setF(p => ({ ...p, [k]: v }))
   const submit = async e => {
     e.preventDefault(); const errs = validateDonor(f); setErrors(errs); setServerErr('')
     if (Object.keys(errs).length) return
+    if (submitting.current) return
+    submitting.current = true
     setSaving(true)
-    try { await onSubmit(f) } catch (err) { setServerErr(err.message); setSaving(false) }
+    try { await onSubmit(f) } catch (err) {
+      setServerErr(err.message)
+      submitting.current = false
+      setSaving(false)
+    }
   }
   const err = k => errors[k] && <p className="mt-1 text-xs text-red-600">{errors[k]}</p>
   return (

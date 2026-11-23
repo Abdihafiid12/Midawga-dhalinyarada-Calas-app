@@ -31,6 +31,8 @@ alter table public.donors drop constraint if exists donors_gender_check;
 alter table public.donors add constraint donors_gender_check check (gender in ('Male','Female'));
 create index if not exists donors_blood_idx on public.donors(blood_group);
 create index if not exists donors_city_idx on public.donors(city);
+create unique index if not exists donors_phone_normalized_idx
+  on public.donors (regexp_replace(phone, '[^0-9]', '', 'g'));
 
 -- ============ HELPERS (SECURITY DEFINER avoids RLS recursion) ============
 create or replace function public.is_active_user() returns boolean
