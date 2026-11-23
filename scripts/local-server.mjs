@@ -1,6 +1,7 @@
 import http from 'node:http'
 import fs from 'node:fs'
 import path from 'node:path'
+import { execFile } from 'node:child_process'
 import pg from 'pg'
 import bcrypt from 'bcryptjs'
 import { SignJWT, jwtVerify } from 'jose'
@@ -154,4 +155,12 @@ const server = http.createServer(async (req, res) => {
 })
 
 const port = Number(process.env.PORT || 4173)
-server.listen(port, '127.0.0.1', () => console.log(`BDMS local app: http://127.0.0.1:${port}`))
+server.listen(port, '127.0.0.1', () => {
+  const url = `http://127.0.0.1:${port}`
+  console.log(`BDMS local app: ${url}`)
+  if (process.env.NO_BROWSER !== '1') {
+    execFile('cmd.exe', ['/c', 'start', '', url], error => {
+      if (error) console.error('Could not open browser:', error.message)
+    })
+  }
+})

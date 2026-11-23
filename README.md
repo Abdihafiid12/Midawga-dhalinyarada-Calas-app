@@ -13,8 +13,8 @@ Blood donor management application built with React, Vite, Tailwind CSS, Neon Po
 3. Copy `.env.example` to `.env.local`.
 4. Set `DATABASE_URL` and a long random `JWT_SECRET`.
 5. Run `npm install`.
-6. Run `npm run dev` for the frontend. Full login/API testing requires `vercel login` and `npm run vercel:dev`.
-7. Open `http://localhost:5173`.
+6. Run `npm run dev`. It builds the app, starts the Neon API, and opens `http://127.0.0.1:4173` automatically.
+7. Set `NO_BROWSER=1` to disable automatic browser opening.
 
 Create or reset an administrator with:
 
