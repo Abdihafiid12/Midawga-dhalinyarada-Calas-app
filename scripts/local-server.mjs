@@ -155,12 +155,26 @@ const server = http.createServer(async (req, res) => {
 })
 
 const port = Number(process.env.PORT || 4173)
-server.listen(port, '127.0.0.1', () => {
-  const url = `http://127.0.0.1:${port}`
-  console.log(`BDMS local app: ${url}`)
+const openBrowser = url => {
   if (process.env.NO_BROWSER !== '1') {
     execFile('cmd.exe', ['/c', 'start', '', url], error => {
       if (error) console.error('Could not open browser:', error.message)
     })
   }
+}
+
+server.on('error', error => {
+  if (error.code === 'EADDRINUSE') {
+    const url = `http://127.0.0.1:${port}`
+    console.log(`BDMS is already running: ${url}`)
+    openBrowser(url)
+    process.exit(0)
+  }
+  throw error
+})
+
+server.listen(port, '127.0.0.1', () => {
+  const url = `http://127.0.0.1:${port}`
+  console.log(`BDMS local app: ${url}`)
+  openBrowser(url)
 })
