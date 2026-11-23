@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
-import { createClient } from '@supabase/supabase-js'
 import { Loader2, UserPlus } from 'lucide-react'
-import { supabase, SUPABASE_URL, SUPABASE_ANON_KEY } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
+import { api } from '../lib/api'
 import Spinner from '../components/Spinner'
 import ErrorBox from '../components/ErrorBox'
 export default function Users() {
@@ -10,13 +9,13 @@ export default function Users() {
   const [users, setUsers] = useState([]); const [loading, setLoading] = useState(true); const [err, setErr] = useState(''); const [ok, setOk] = useState('')
   const [f, setF] = useState({ full_name: '', email: '', password: '', role: 'staff' }); const [busy, setBusy] = useState(false)
   const load = useCallback(async () => {
-    const { data, error } = await supabase.from('profiles').select('*').order('created_at')
-    if (error) setErr(error.message); else setUsers(data); setLoading(false)
+    try { const { users } = await api('/api/users'); setUsers(users) } catch (error) { setErr(error.message) }
+    setLoading(false)
   }, [])
   useEffect(() => { load() }, [load])
   const patch = async (id, changes) => {
-    setErr(''); const { error } = await supabase.from('profiles').update(changes).eq('id', id)
-    if (error) setErr(error.message); else load()
+    setErr('')
+    try { await api('/api/users', { method: 'PATCH', body: JSON.stringify({ id, ...changes }) }); load() } catch (error) { setErr(error.message) }
   }
   const create = async e => {
     e.preventDefault(); setErr(''); setOk('')
@@ -24,11 +23,9 @@ export default function Users() {
     if (!/^\S+@\S+\.\S+$/.test(f.email)) return setErr('Enter a valid email')
     if (f.password.length < 8) return setErr('Password must be at least 8 characters')
     setBusy(true)
-    // Separate non-persisting client keeps the admin's own session untouched. Uses the public anon key only.
-    const tmp = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false } })
-    const { data, error } = await tmp.auth.signUp({ email: f.email.trim(), password: f.password, options: { data: { full_name: f.full_name.trim() } } })
-    if (error || !data.user) { setBusy(false); return setErr(error?.message || 'Could not create user') }
-    await patch(data.user.id, { role: f.role, is_active: true, full_name: f.full_name.trim() })
+    try {
+      await api('/api/users', { method: 'POST', body: JSON.stringify({ email:f.email.trim(), password:f.password, full_name:f.full_name.trim(), role:f.role }) })
+    } catch (error) { setBusy(false); return setErr(error.message) }
     setBusy(false); setOk(`Account created for ${f.email}`); setF({ full_name: '', email: '', password: '', role: 'staff' })
   }
   if (loading) return <Spinner />
