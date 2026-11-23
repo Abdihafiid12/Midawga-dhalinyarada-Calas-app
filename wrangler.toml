@@ -1,0 +1,8 @@
+name = "spring-hall-5db8"
+main = "src/worker.js"
+compatibility_date = "2025-07-01"
+
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"

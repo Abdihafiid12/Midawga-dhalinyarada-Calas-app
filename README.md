@@ -2,6 +2,21 @@
 
 Blood donor management application built with React, Vite, Tailwind CSS, Neon PostgreSQL, and Vercel Functions.
 
+## Cloudflare Workers deployment
+
+This project can be deployed as one Cloudflare Worker that serves both the Vite
+frontend and the `/api/*` routes.
+
+1. Run `npx wrangler login`.
+2. Add the server secrets:
+   - `npx wrangler secret put DATABASE_URL`
+   - `npx wrangler secret put JWT_SECRET`
+3. Deploy with `npm run deploy`.
+4. Open `https://YOUR-WORKER-NAME.workers.dev/api/health`.
+
+The health response should show `databaseConfigured` and `jwtConfigured` as
+`true`. Do not put secrets in `wrangler.toml` or commit them to Git.
+
 <p align="center">
   <img src="src/assets/mdc-logo.png" alt="Midawga Dhalinyarada Calas" width="220">
 </p>
