@@ -17,7 +17,7 @@ create table if not exists public.donors (
   id uuid primary key default gen_random_uuid(),
   donor_code text unique default ('BD-' || lpad(nextval('public.donor_seq')::text, 5, '0')),
   full_name text not null check (char_length(trim(full_name)) between 2 and 100),
-  gender text not null check (gender in ('Male','Female','Other')),
+  gender text not null check (gender in ('Male','Female')),
   age integer not null check (age between 18 and 65),
   phone text not null check (phone ~ '^\+?[0-9\s-]{7,15}$'),
   blood_group text not null check (blood_group in ('A+','A-','B+','B-','AB+','AB-','O+','O-')),
@@ -27,6 +27,8 @@ create table if not exists public.donors (
   created_at timestamptz not null default now(),
   created_by uuid default auth.uid() references auth.users(id) on delete set null
 );
+alter table public.donors drop constraint if exists donors_gender_check;
+alter table public.donors add constraint donors_gender_check check (gender in ('Male','Female'));
 create index if not exists donors_blood_idx on public.donors(blood_group);
 create index if not exists donors_city_idx on public.donors(city);
 
