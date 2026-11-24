@@ -27,6 +27,7 @@ create table if not exists public.donors (
   created_at timestamptz not null default now(),
   created_by uuid default auth.uid() references auth.users(id) on delete set null
 );
+alter table public.donors alter column phone type text using phone::text;
 alter table public.donors drop constraint if exists donors_gender_check;
 alter table public.donors add constraint donors_gender_check check (gender in ('Male','Female'));
 create index if not exists donors_blood_idx on public.donors(blood_group);

@@ -25,6 +25,8 @@ create table if not exists donors (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+alter table donors alter column phone type text using phone::text;
+alter table donors alter column normalized_phone type text using normalized_phone::text;
 create sequence if not exists donor_seq start 1;
 create or replace function set_donor_code() returns trigger language plpgsql as $$
 begin

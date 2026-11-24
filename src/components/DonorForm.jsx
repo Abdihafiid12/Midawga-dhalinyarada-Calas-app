@@ -31,7 +31,7 @@ export default function DonorForm({ donor, onSubmit, onCancel }) {
         <div><label className="label">Full Name *</label><input className="input" value={f.full_name} onChange={e => set('full_name', e.target.value)} />{err('full_name')}</div>
         <div><label className="label">Gender *</label><select className="input" value={f.gender} onChange={e => set('gender', e.target.value)}><option value="">Select</option>{GENDERS.map(g => <option key={g}>{g}</option>)}</select>{err('gender')}</div>
         <div><label className="label">Age (18–65) *</label><input type="number" className="input" value={f.age} onChange={e => set('age', e.target.value)} />{err('age')}</div>
-        <div><label className="label">Phone Number *</label><input className="input" value={f.phone} onChange={e => set('phone', e.target.value)} />{err('phone')}</div>
+        <div><label className="label">Phone Number *</label><input type="text" inputMode="tel" autoComplete="tel" className="input" value={f.phone} onChange={e => set('phone', e.target.value)} />{err('phone')}</div>
         <div><label className="label">Blood Group *</label><select className="input" value={f.blood_group} onChange={e => set('blood_group', e.target.value)}><option value="">Select</option>{BLOOD_GROUPS.map(g => <option key={g}>{g}</option>)}</select>{err('blood_group')}</div>
         <div><label className="label">City *</label><input className="input" value={f.city} onChange={e => set('city', e.target.value)} />{err('city')}</div>
       </div>

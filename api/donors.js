@@ -20,9 +20,10 @@ export default async function handler(req, res) {
   if (!d?.full_name || !d?.phone || !d?.gender || !d?.blood_group || !d?.city) {
     return res.status(400).json({ error: 'Required donor fields are missing' })
   }
-  const normalized = d.phone.replace(/\D/g, '')
+  const phone = String(d.phone).trim()
+  const normalized = phone.replace(/\D/g, '')
   const clean = {
-    full_name:d.full_name.trim(), gender:d.gender, age:Number(d.age), phone:d.phone.trim(),
+    full_name:d.full_name.trim(), gender:d.gender, age:Number(d.age), phone,
     normalized_phone:normalized, blood_group:d.blood_group, city:d.city.trim(),
     address:(d.address || '').trim(), availability_status:!!d.availability_status
   }
