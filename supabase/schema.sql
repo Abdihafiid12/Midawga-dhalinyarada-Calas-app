@@ -1,4 +1,4 @@
--- BDMS schema + RLS. Run in Supabase Dashboard > SQL Editor.
+-- CALAS schema + RLS. Run in Supabase Dashboard > SQL Editor.
 create extension if not exists pgcrypto;
 
 -- ============ PROFILES ============

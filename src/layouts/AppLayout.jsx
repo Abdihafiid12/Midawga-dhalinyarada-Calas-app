@@ -12,7 +12,7 @@ export default function AppLayout() {
       {open && <div className="fixed inset-0 z-30 bg-black/50 lg:hidden" onClick={() => setOpen(false)} />}
       <aside className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col bg-gray-900 text-gray-200 transition-transform lg:static lg:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="flex items-center gap-2 px-5 py-5"><img src={mdcLogo} alt="Midawga Dhalinyarada Calas" className="h-12 w-12 object-contain" />
-          <div><p className="font-bold leading-none text-white">Midawga Dhalinyarada Calas</p><p className="text-xs text-gray-400">Blood Donor System</p></div>
+          <div><p className="font-bold leading-none text-white">Midawga Dhalinyarada Calas</p><p className="text-xs text-gray-400">CALAS</p></div>
           <button className="ml-auto lg:hidden" onClick={() => setOpen(false)}><X className="h-5 w-5" /></button></div>
         <nav className="flex-1 space-y-1 px-3">
           {links.map(l => <NavLink key={l.to} to={l.to} end={l.end} onClick={() => setOpen(false)}

@@ -166,7 +166,7 @@ const openBrowser = url => {
 server.on('error', error => {
   if (error.code === 'EADDRINUSE') {
     const url = `http://127.0.0.1:${port}`
-    console.log(`BDMS is already running: ${url}`)
+    console.log(`CALAS is already running: ${url}`)
     openBrowser(url)
     process.exit(0)
   }
@@ -175,6 +175,6 @@ server.on('error', error => {
 
 server.listen(port, '127.0.0.1', () => {
   const url = `http://127.0.0.1:${port}`
-  console.log(`BDMS local app: ${url}`)
+  console.log(`CALAS local app: ${url}`)
   openBrowser(url)
 })
