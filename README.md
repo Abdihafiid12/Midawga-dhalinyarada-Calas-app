@@ -34,7 +34,7 @@ The health response should show `databaseConfigured` and `jwtConfigured` as
 Create or reset an administrator with:
 
 ```powershell
-npm run create-admin -- Caqilalan@gmail.com YOUR_PASSWORD "Caqilalan"
+npm run create-admin -- ADMIN_EMAIL YOUR_PASSWORD "ADMIN_NAME"
 ```
 
 ## Usage
