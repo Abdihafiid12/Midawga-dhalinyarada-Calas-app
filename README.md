@@ -2,6 +2,10 @@
 
 Blood donor management application built with React, Vite, Tailwind CSS, Neon PostgreSQL, and Vercel Functions.
 
+## Live app
+
+[Open the application](https://calas.caqilalan.workers.dev/)
+
 ## Cloudflare Workers deployment
 
 This project can be deployed as one Cloudflare Worker that serves both the Vite
